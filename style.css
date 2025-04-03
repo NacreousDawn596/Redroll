@@ -1,0 +1,235 @@
+:root {
+    --bs-primary: #9b30ff;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+#app {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#app::-webkit-scrollbar {
+    display: none;
+}
+
+.description-text.expanded::-webkit-scrollbar,
+.tweet-style::-webkit-scrollbar {
+    width: 5px;
+}
+
+.description-text.expanded::-webkit-scrollbar-thumb,
+.tweet-style::-webkit-scrollbar-thumb {
+    background: rgba(155, 48, 255, 0.5);
+    border-radius: 3px;
+}
+
+body {
+    margin: 0;
+    background: #000;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#app {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+.post-container {
+    height: 100vh;
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+
+.media-content {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.media-content.video {
+    max-width: 100%;
+    max-height: 100vh;
+}
+
+.description-box {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    transition: all 0.3s;
+}
+
+.description-text {
+    max-height: 3.6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.8em;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.description-text.expanded {
+    -webkit-line-clamp: unset;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.media-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-icon {
+    color: #fff;
+    font-size: 1.8rem;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.nav-icon.active {
+    color: #9b30ff;
+    transform: scale(1.1);
+}
+
+.text-post {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100%;
+    background: #111;
+}
+
+.tweet-style {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    max-width: 600px;
+    width: 90%;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.tweet-style strong {
+    color: #9b30ff;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.markdown-content {
+    overflow-wrap: break-word;
+}
+
+.markdown-content p {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content a {
+    color: #9b30ff;
+    text-decoration: underline;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+
+/* Search Page Styles */
+.search-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+    padding: 20px;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1.5rem 2.5rem;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #9b30ff;
+    box-shadow: 0 0 15px rgba(155, 48, 255, 0.3);
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.5rem;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    color: #9b30ff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redroll | homepage</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="nav-footer" v-if="subreddit">
+            <i class="bi bi-arrow-left back-button" @click="goBack"></i>
+            <div class="text-white">{{ subreddit }}</div>
+        </div>
+        <div class="nav-footer">
+            <i class="bi bi-house-door-fill nav-icon" 
+               :class="{active: currentView === 'feed'}"
+               @click="switchView('feed')"></i>
+            <i class="bi bi-search nav-icon" 
+               :class="{active: currentView === 'search'}"
+               @click="switchView('search')"></i>
+        </div>
+
+        <div v-if="currentView === 'feed'">
+            <div v-for="post in posts" :key="post.id" class="post-container">
+                <div class="position-relative h-100">
+                    <template v-if="post.mediaType">
+                        <div class="video-container" v-if="post.mediaType === 'video'">
+                            <video class="media-content video"
+                                :ref="'video-' + post.id"
+                                playsinline
+                                autoplay
+                                muted
+                                loop
+                                preload="auto"
+                                @loadeddata="post.loading = false"
+                                @error="handleMediaError(post)">
+                                <source :src="post.mediaUrl" type="video/mp4">
+                            </video>
+                            <div class="video-overlay" @click="toggleVideoPlayback(post)"></div>
+                        </div>
+
+                        <img v-else 
+                            :src="post.mediaUrl" 
+                            class="media-content"
+                            loading="eager"
+                            @load="post.loading = false"
+                            @error="handleMediaError(post)">
+                        
+                        <div v-if="post.loading" class="media-loading">
+                            <div class="spinner-border text-primary"></div>
+                        </div>
+                    </template>
+
+                    <div v-else class="text-post">
+                        <div class="tweet-style">
+                            <strong>@{{ post.author }}</strong>
+                            <div class="markdown-content" v-html="parseMarkdown(post.title)"></div>
+                            <div class="markdown-content" v-if="post.description" v-html="parseMarkdown(post.description)"></div>
+                        </div>
+                    </div>
+
+                    <div class="description-box" @click.stop="toggleDescription(post)" v-if="post.mediaType">
+                        <div class="description-text" :class="{expanded: post.expanded}">
+                            <strong>@{{ post.author }}</strong> · 
+                            <span v-html="parseMarkdown(post.title)"></span>
+                            <span v-if="post.description" v-html="parseMarkdown('· ' + post.description)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="loading" class="text-center py-4">
+                <div class="spinner-border text-primary"></div>
+            </div>
+        </div>
+
+        <div v-if="currentView === 'search'" class="search-page">
+            <div class="search-container">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text" 
+                       class="search-input" 
+                       placeholder="Search subreddits or posts..."
+                       v-model="searchQuery"
+                       @keyup.enter="performSearch">
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
