@@ -41,7 +41,7 @@ Redroll revolutionizes Reddit browsing with a **TikTok-inspired interface** that
 ## 🚀 Getting Started
 
 ### Quick Start
-1. Clone the repository: `git clone https://github.com/yourusername/redroll.git`
+1. Clone the repository: `git clone https://github.com/NacreousDawn596/redroll.git`
 2. Navigate to project directory
 3. Open `index.html` in your preferred browser
 
